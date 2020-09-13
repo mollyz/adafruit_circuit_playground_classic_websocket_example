@@ -73,14 +73,19 @@ async def time(websocket, path):
         output = "Pending"
         if board.digital_read(4) == 1:
             output = "Left button pressed!"
+            await websocket.send(output)
+            await asyncio.sleep(0.3)
         
         if board.digital_read(19) == 1:
             output = "Right button pressed!"
+            await websocket.send(output)
+            await asyncio.sleep(0.3)
         # now = datetime.datetime.utcnow().isoformat() + "Z"
-        now = output
-        await websocket.send(now)
-        # await asyncio.sleep(random.random() * 3)
-        await asyncio.sleep(1)
+
+        # now = output
+        # await websocket.send(now)
+        # # await asyncio.sleep(random.random() * 3)
+        # await asyncio.sleep(1)
 
 start_server = websockets.serve(time, "127.0.0.1", 5678)
 
